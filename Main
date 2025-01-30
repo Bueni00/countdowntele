@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="countdown">
+        <span id="days"></span> Tage
+        <span id="hours"></span> Stunden
+        <span id="minutes"></span> Minuten
+        <span id="seconds"></span> Sekunden
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+#countdown {
+    font-size: 2em;
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+// Ziel-Datum setzen (Jahr, Monat (0-basiert), Tag, Stunde, Minute, Sekunde)
+const targetDate = new Date(2025, 02, 12, 23, 59, 59); // Beispiel: 31. Dezember 2024, 23:59:59
+
+function updateCountdown() {
+    const now = new Date();
+    const timeDifference = targetDate - now;
+
+    if (timeDifference <= 0) {
+        document.getElementById('countdown').innerHTML = "Countdown abgelaufen!";
+        return;
+    }
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    document.getElementById('days').textContent = days;
+    document.getElementById('hours').textContent = hours;
+    document.getElementById('minutes').textContent = minutes;
+    document.getElementById('seconds').textContent = seconds;
+}
+
+// Countdown jede Sekunde aktualisieren
+setInterval(updateCountdown, 1000);
+
+// Initialen Aufruf, um Verzögerung zu vermeiden
+updateCountdown();
